@@ -1,0 +1,15 @@
+<div class="emails-editor">
+  <h2>Share <b>Board name</b> with other</h2>
+  <div class="input-form">
+    <!-- <div > -->
+      <email-block *ngFor="let block of blocks" [block]=block (deleted)="onDeleted($event)" class="email-block"></email-block>
+    <!-- </div> -->
+    <textarea
+      [(placeholder)]="inputFormPlaceholder"
+      [(ngModel)]="inputEmail"
+      (keypress)="keyPress($event)"
+      (focusout)="keyPress({ key: 'focusout'})">
+    </textarea>
+  </div>
+</div>
+
