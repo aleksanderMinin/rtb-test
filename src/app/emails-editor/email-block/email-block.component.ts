@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Block } from '../block';
 
 @Component({
@@ -6,9 +6,7 @@ import { Block } from '../block';
   templateUrl: './email-block.component.html',
   styleUrls: ['./email-block.component.less']
 })
-export class EmailBlockComponent implements OnInit {
-
-  constructor() { }
+export class EmailBlockComponent {
 
   @Input('block') block: Block;
 
@@ -17,8 +15,4 @@ export class EmailBlockComponent implements OnInit {
   delete(): void {
     this.deleted.emit(this.block);
   }
-
-  ngOnInit() {
-  }
-
 }

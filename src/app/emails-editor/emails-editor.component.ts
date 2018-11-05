@@ -47,24 +47,27 @@ export class EmailsEditorComponent implements OnChanges {
 
   keyPress(event: any) {
     const key: string = event.key;
+    const resetInput = () => {
+      this.inputEmail = '';
+      event.returnValue = false;
+    };
+
     switch (key) {
       case ';':
       case ',':
       case 'Enter':
       case 'focusout':
         if (this.inputEmail.length > 0) {
-          if (!(this.inputEmail === ',' || this.inputEmail === ';')) {
+          // if (!(this.inputEmail === ',' || this.inputEmail === ';')) {
             this.addBlock(this.inputEmail);
-          }
+          // }
 
-          this.inputEmail = '';
-          event.returnValue = false;
+          resetInput();
         }
       break;
       default:
         if (this.inputEmail.match(/[,;]$/)) {
-          this.inputEmail = '';
-          event.returnValue = false;
+          resetInput();
         }
       break;
     }

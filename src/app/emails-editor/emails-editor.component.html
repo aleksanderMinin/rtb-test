@@ -1,9 +1,7 @@
 <div class="emails-editor">
   <h2>Share <b>Board name</b> with other</h2>
   <div class="input-form">
-    <!-- <div > -->
-      <email-block *ngFor="let block of blocks" [block]=block (deleted)="onDeleted($event)" class="email-block"></email-block>
-    <!-- </div> -->
+    <email-block *ngFor="let block of blocks" [block]=block (deleted)="onDeleted($event)" class="email-block"></email-block>
     <textarea
       [(placeholder)]="inputFormPlaceholder"
       [(ngModel)]="inputEmail"
