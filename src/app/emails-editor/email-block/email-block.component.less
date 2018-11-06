@@ -5,10 +5,20 @@
   font-size: 15px;
   margin: 7px 0px 0px 8px;
   height: 25px;
+  cursor: default;
 
   & span {
     vertical-align: sub;
     padding: 0px 8px;
+  }
+
+  &.invalid-block {
+    background-color: inherit;
+    border: none;
+    color: black;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: 2px solid #d14836;
   }
 }
 
@@ -19,5 +29,9 @@
 
   &::before {
     content: '\D7';
+  }
+
+  &:hover {
+    font-weight: bold;
   }
 }

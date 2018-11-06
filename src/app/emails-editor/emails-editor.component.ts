@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Block } from './block';
 // import { _ } from '../../../node_modules/lodash/lodash.js';
+import * as $ from 'jquery';
 
 var _ = require('lodash');
 
@@ -23,10 +24,33 @@ export class EmailsEditorComponent implements OnChanges {
 
   @Output() emailsCount = new EventEmitter<number>();
 
+  resizeTextarea(): void {
+    var $blocks: any = $('email-block');
+    if ($blocks.length > 0 ) {
+      let formWidth = ;
+      $blocks.toArray().forEach(block => {
+        let width = $(block).width();
+      });
+    }
+    // $blocks.forEach(block => {
+    //   let width = $(block);
+    // });
+  };
+
   addBlock(address: string): void {
+    if (address.match(/[,;].*$/)) {
+      this.addBlock(address.slice(1));
+      return;
+    }
+
     const block: Block = new Block(address);
     this.blocks.push(block);
     this.inputFormPlaceholder = 'add mode people...';
+    this.resizeTextarea();
+  };
+
+  ngDoCheck() {
+    let x = 1;
   };
 
   onDeleted(block: Block): void {
@@ -37,6 +61,8 @@ export class EmailsEditorComponent implements OnChanges {
     if (this.blocks.length === 0) {
       this.inputFormPlaceholder = 'Enter names or email addresses';
     }
+
+    this.resizeTextarea();
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -59,14 +85,14 @@ export class EmailsEditorComponent implements OnChanges {
       case 'Enter':
       case 'focusout':
         if (this.inputEmail.length > 0) {
-          this.addBlock(this.inputEmail);
+          if (!this.inputEmail.match(/[,;]$/)){
+            this.addBlock(this.inputEmail);
+          }
+
           resetInput();
         }
       break;
       default:
-        if (this.inputEmail.match(/[,;]$/)) {
-          resetInput();
-        }
       break;
     }
   }
