@@ -24,29 +24,27 @@ export class EmailsEditorComponent implements OnChanges {
 
   @Output() emailsCount = new EventEmitter<number>();
 
-  resizeTextarea(): void {
-    var $blocks: any = $('email-block');
-    if ($blocks.length > 0 ) {
-      let formWidth = ;
-      $blocks.toArray().forEach(block => {
-        let width = $(block).width();
-      });
-    }
-    // $blocks.forEach(block => {
-    //   let width = $(block);
-    // });
-  };
-
   addBlock(address: string): void {
-    if (address.match(/[,;].*$/)) {
+    // Remove "," ";" from start of string
+    if (address.match(/^[,;].*$/)) {
       this.addBlock(address.slice(1));
+      return;
+    }
+
+    // Remove "," ";" from end of string
+    if (address.match(/^.*[,;]$/)) {
+      this.addBlock(address.slice(0, address.length - 1));
+      return;
+    }
+
+    // Discard doubles
+    if (_.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1) {
       return;
     }
 
     const block: Block = new Block(address);
     this.blocks.push(block);
-    this.inputFormPlaceholder = 'add mode people...';
-    this.resizeTextarea();
+    this.inputFormPlaceholder = 'add more people...';
   };
 
   ngDoCheck() {
@@ -61,8 +59,6 @@ export class EmailsEditorComponent implements OnChanges {
     if (this.blocks.length === 0) {
       this.inputFormPlaceholder = 'Enter names or email addresses';
     }
-
-    this.resizeTextarea();
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -74,10 +70,6 @@ export class EmailsEditorComponent implements OnChanges {
 
   keyPress(event: any) {
     const key: string = event.key;
-    const resetInput = () => {
-      this.inputEmail = '';
-      event.returnValue = false;
-    };
 
     switch (key) {
       case ';':
@@ -85,11 +77,12 @@ export class EmailsEditorComponent implements OnChanges {
       case 'Enter':
       case 'focusout':
         if (this.inputEmail.length > 0) {
-          if (!this.inputEmail.match(/[,;]$/)){
+          if (!this.inputEmail.match(/^[,;]$/)){
             this.addBlock(this.inputEmail);
           }
 
-          resetInput();
+          this.inputEmail = '';
+          event.returnValue = false;
         }
       break;
       default:

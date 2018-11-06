@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Open Sans';
+  src: url("https://fonts.googleapis.com/css?family=Open+Sans");
+}
+
 .emails-editor {
   background-color: #f5f5f5;
   width: 420px;
@@ -6,17 +11,26 @@
 }
 
 .input-form {
+  display: -webkit-flex;
+  flex-wrap: wrap;
+  display: flex;
+  align-content: flex-start;
   margin-top: 34px;
   min-width: 360px;
   height: 98px;
   overflow-y: auto;
   background-color: #fff;
   border-top:#d3d3d3 solid 1px;
+  overflow-x: hidden;
+}
+
+.email-block {
+  height: fit-content;
 }
 
 textarea {
-  display: inline-block;
-  overflow-x: hidden;
+  display: inline-flex;
+  flex-grow: 1;
   overflow-y: hidden;
   resize: none;
   border: none;
@@ -27,10 +41,16 @@ textarea {
   vertical-align: -moz-middle-with-baseline;
   margin: 7px 0px 0px 8px;
   font-size: 15px;
+  position: relative;
+  top: 2px;
 }
 
 h2 {
   font-size: 20px;
   font-weight: 400;
+}
+
+* {
+  font-family: 'Open Sans', "helvetica neue", Arial, sans-serif;
 }
 
