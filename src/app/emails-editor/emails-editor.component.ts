@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Block } from './block';
+// import { _ } from '../../../node_modules/lodash/lodash.js';
 
-var _ = require('lodash')
+var _ = require('lodash');
 
 @Component({
   selector: 'emails-editor',
@@ -58,10 +59,7 @@ export class EmailsEditorComponent implements OnChanges {
       case 'Enter':
       case 'focusout':
         if (this.inputEmail.length > 0) {
-          // if (!(this.inputEmail === ',' || this.inputEmail === ';')) {
-            this.addBlock(this.inputEmail);
-          // }
-
+          this.addBlock(this.inputEmail);
           resetInput();
         }
       break;

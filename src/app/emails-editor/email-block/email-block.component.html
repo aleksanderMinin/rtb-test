@@ -1,4 +1,4 @@
-<div class="email-block">
+<div class="email-block" [ngClass]="{validBlock: block.isValid}">
   <span class="">{{block.address}}
     <div class="icon-x" (click)="delete()"></div>
   </span>

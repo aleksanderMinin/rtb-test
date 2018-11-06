@@ -4,7 +4,7 @@ export class Block {
 
   constructor(address: string) {
     this.address = address;
-    this.validate();
+    this.isValid = this.validate();
   }
 
   validate(): boolean {
