@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Block } from './block';
 // import { _ } from '../../../node_modules/lodash/lodash.js';
 import * as $ from 'jquery';
@@ -10,7 +10,7 @@ var _ = require('lodash');
   templateUrl: './emails-editor.component.html',
   styleUrls: ['./emails-editor.component.less']
 })
-export class EmailsEditorComponent implements OnChanges {
+export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   constructor() { }
 
@@ -45,6 +45,9 @@ export class EmailsEditorComponent implements OnChanges {
     const block: Block = new Block(address);
     this.blocks.push(block);
     this.inputFormPlaceholder = 'add more people...';
+    setTimeout(() => {
+      $('.input-form')[0].scrollTop = 999;
+    }, 10);
   };
 
   ngDoCheck() {
@@ -66,7 +69,33 @@ export class EmailsEditorComponent implements OnChanges {
     if (newMail) {
       this.addBlock(newMail);
     }
-  }
+  };
+
+  ngOnInit(): void {
+    $('textarea').on('paste', (event: any) => {
+      this.onPaste(event.target);
+    })
+  };
+
+  ngOnDestroy(): void {
+    $('textarea').off('paste', this.onPaste);
+  };
+
+  onPaste(target: any): void {
+    setTimeout(() => {
+      let text: string = target.value.trim();
+      while (text.match(/[,;]/)) {
+        this.addBlock(text.slice(0, text.match(/[,;]/).index));
+        text = text.slice(text.match(/[,;]/).index + 1);
+      }
+
+      if (text.length > 0) {
+        this.addBlock(text);
+      }
+
+      this.inputEmail = '';
+    }, 50);
+  };
 
   keyPress(event: any) {
     const key: string = event.key;
@@ -88,6 +117,6 @@ export class EmailsEditorComponent implements OnChanges {
       default:
       break;
     }
-  }
+  };
 
 }
