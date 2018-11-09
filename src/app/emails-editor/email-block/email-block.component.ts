@@ -3,7 +3,12 @@ import { Block } from '../block';
 
 @Component({
   selector: 'email-block',
-  templateUrl: './email-block.component.html',
+  template: `
+    <div class="email-block" [ngClass]="{'invalid-block': block.isValid === false}">
+      <span class="">{{block.address}}
+        <div class="icon-x" (click)="delete()"></div>
+      </span>
+    </div>`,
   styleUrls: ['./email-block.component.less']
 })
 export class EmailBlockComponent {

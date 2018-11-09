@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Block } from './block';
-// import { _ } from '../../../node_modules/lodash/lodash.js';
 import * as $ from 'jquery';
-
-var _ = require('lodash');
+import * as _ from 'lodash';
 
 @Component({
   selector: 'emails-editor',
@@ -20,11 +18,19 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   inputEmail: string = '';
 
+  @Input() emailsCount: number;
+
   @Input('emailAddress') addEmail: string = null;
 
-  @Output() emailsCount = new EventEmitter<number>();
+  @Output() emailsCountChange = new EventEmitter<number>();
 
   addBlock(address: string): void {
+    // Discard doubles or empty address
+    let hasDouble = _.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1;
+    if (!address || address.length == 0 || hasDouble) {
+      return;
+    }
+
     // Remove "," ";" from start of string
     if (address.match(/^[,;].*$/)) {
       this.addBlock(address.slice(1));
@@ -37,70 +43,62 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
       return;
     }
 
-    // Discard doubles
-    if (_.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1) {
-      return;
-    }
+    this.blocks.push(new Block(address));
+    this.blocksChanged();
 
-    const block: Block = new Block(address);
-    this.blocks.push(block);
-    this.inputFormPlaceholder = 'add more people...';
+    // Beuty scroll
     setTimeout(() => {
-      $('.input-form')[0].scrollTop = 999;
-    }, 10);
-  };
-
-  ngDoCheck() {
-    let x = 1;
+      let $input = $('.input-form');
+      $input.animate({
+        scrollTop : $input[0].scrollHeight
+      }, 300 , 'linear' );
+    }, 50);
   };
 
   onDeleted(block: Block): void {
     _.remove(this.blocks, (it: Block) => {
       return it.address === block.address;
     });
+    this.blocksChanged();
+  };
 
+  blocksChanged(): void {
     if (this.blocks.length === 0) {
       this.inputFormPlaceholder = 'Enter names or email addresses';
+    } else {
+      this.inputFormPlaceholder = 'add more people...';
     }
+
+    this.emailsCountChange.emit(this.blocks.length);
   };
 
   ngOnChanges(changes: SimpleChanges) {
-    var newMail = _.get(changes, 'addEmail.currentValue');
-    if (newMail) {
-      this.addBlock(newMail);
-    }
+    this.addBlock(_.get(changes, 'addEmail.currentValue'));
   };
 
   ngOnInit(): void {
-    $('textarea').on('paste', (event: any) => {
-      this.onPaste(event.target);
-    })
+    $('textarea').on('paste', this.onPaste.bind(this));
   };
 
   ngOnDestroy(): void {
     $('textarea').off('paste', this.onPaste);
   };
 
-  onPaste(target: any): void {
+  onPaste(event: any): void {
     setTimeout(() => {
-      let text: string = target.value.trim();
+      let text: string = event.target.value.trim();
       while (text.match(/[,;]/)) {
         this.addBlock(text.slice(0, text.match(/[,;]/).index));
         text = text.slice(text.match(/[,;]/).index + 1);
       }
 
-      if (text.length > 0) {
-        this.addBlock(text);
-      }
-
+      this.addBlock(text);
       this.inputEmail = '';
     }, 50);
   };
 
   keyPress(event: any) {
-    const key: string = event.key;
-
-    switch (key) {
+    switch (event.key) {
       case ';':
       case ',':
       case 'Enter':
@@ -118,5 +116,4 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
       break;
     }
   };
-
 }

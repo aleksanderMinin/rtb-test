@@ -4,11 +4,11 @@ import { BLOCKS } from './default-blocks';
 
 @Component({
     selector: 'app-component',
-    template: `<div id="app-component">
-                    <emails-editor (count)="onCount($event)" [emailAddress]="emailAddress">
+    template: `<div class="app-component">
+                    <emails-editor [(emailsCount)]="emailsCount" [emailAddress]="emailAddress">
                         Loading...
                     </emails-editor>
-                    <div class='buttons'>
+                    <div class='app-buttons'>
                         <button (click)="addEmail()">Add email</button>
                         <button (click)="getEmailsCount()">Get email count</button>
                     </div>
@@ -43,6 +43,6 @@ export class AppComponent implements OnInit {
 
     getEmailsCount(): void {
         var count: number = this.emailsCount;
-        alert(`There ${count !== 1 ? `are ${count === 0 ? 'no' : count} emails` : ' is 1 email'}.`);
+        alert(`There ${count !== 1 ? `are ${count === 0 ? 'no' : count} emails` : 'is 1 email'}.`);
     }
 }

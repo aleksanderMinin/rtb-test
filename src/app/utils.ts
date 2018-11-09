@@ -5,7 +5,7 @@ export class Utils {
   };
 
   static randomString(lenght: number, local: boolean = false): string {
-      const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.!$&*-=^`|~#%'+/?_{}";
+      const possible = "abcdefghijklmnopqrstuvwxyz0123456789.!$&*-=^`|~#%'+/?_{}";
       var text = "";
 
       for (var i = 0; i < lenght; i++)

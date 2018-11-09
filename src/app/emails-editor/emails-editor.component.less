@@ -16,12 +16,26 @@
   display: flex;
   align-content: flex-start;
   margin-top: 34px;
-  min-width: 360px;
   height: 98px;
   overflow-y: auto;
   background-color: #fff;
   border-top:#d3d3d3 solid 1px;
   overflow-x: hidden;
+
+
+  &::-webkit-scrollbar-track {
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #f0f2f5;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: #d5e5ff;
+  }
 }
 
 .email-block {
@@ -53,4 +67,3 @@ h2 {
 * {
   font-family: 'Open Sans', "helvetica neue", Arial, sans-serif;
 }
-
