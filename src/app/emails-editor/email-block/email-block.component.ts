@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'email-block',
   template: `
-    <span class="">{{block.address}}
+    <span class="">{{block?.address}}
     </span>
     <div class="icon-x" (click)="delete()"></div>`,
   styleUrls: ['./email-block.component.less']

@@ -22,9 +22,21 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   @Output() count = new EventEmitter<number>();
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.addBlock(_.get(changes, 'addEmail.currentValue'));
+  };
+
+  ngOnInit(): void {
+    $('textarea').on('paste', this.onPaste.bind(this));
+  };
+
+  ngOnDestroy(): void {
+    $('textarea').off('paste', this.onPaste);
+  };
+
   addBlock(address: string): void {
     // Discard doubles or empty address
-    let hasDouble = _.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1;
+    const hasDouble = _.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1;
     if (!address || address.length == 0 || hasDouble) {
       return;
     }
@@ -68,18 +80,6 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
     }
 
     this.count.emit(this.blocks.length);
-  };
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.addBlock(_.get(changes, 'addEmail.currentValue'));
-  };
-
-  ngOnInit(): void {
-    $('textarea').on('paste', this.onPaste.bind(this));
-  };
-
-  ngOnDestroy(): void {
-    $('textarea').off('paste', this.onPaste);
   };
 
   onPaste(event: any): void {
