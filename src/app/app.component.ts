@@ -4,16 +4,14 @@ import { BLOCKS } from './default-blocks';
 
 @Component({
     selector: 'app-component',
-    template: `<div class="app-component">
-                    <emails-editor [(emailsCount)]="emailsCount" [emailAddress]="emailAddress">
-                        Loading...
-                    </emails-editor>
-                    <div class='app-buttons'>
-                        <button (click)="addEmail()">Add email</button>
-                        <button (click)="getEmailsCount()">Get email count</button>
-                    </div>
-                </div>
-    `,
+    template: `
+                <emails-editor (count)="onCount($event)" [emailAddress]="emailAddress">
+                    Loading...
+                </emails-editor>
+                <div class='app-buttons'>
+                    <button (click)="addEmail()">Add email</button>
+                    <button (click)="getEmailsCount()">Get email count</button>
+                </div>`,
     styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
@@ -28,8 +26,10 @@ export class AppComponent implements OnInit {
     };
 
     ngOnInit() {
-        BLOCKS.forEach(block => {
-            this.emailAddress = block.address;
+        BLOCKS.forEach((block, index) => {
+            setTimeout(() => {
+                this.emailAddress = block.address;
+            }, 50 * index);
         })
     };
 

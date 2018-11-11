@@ -18,11 +18,9 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   inputEmail: string = '';
 
-  @Input() emailsCount: number;
-
   @Input('emailAddress') addEmail: string = null;
 
-  @Output() emailsCountChange = new EventEmitter<number>();
+  @Output() count = new EventEmitter<number>();
 
   addBlock(address: string): void {
     // Discard doubles or empty address
@@ -51,7 +49,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
       let $input = $('.input-form');
       $input.animate({
         scrollTop : $input[0].scrollHeight
-      }, 300 , 'linear' );
+      }, 100 , 'linear' );
     }, 50);
   };
 
@@ -69,7 +67,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
       this.inputFormPlaceholder = 'add more people...';
     }
 
-    this.emailsCountChange.emit(this.blocks.length);
+    this.count.emit(this.blocks.length);
   };
 
   ngOnChanges(changes: SimpleChanges) {
@@ -97,7 +95,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
     }, 50);
   };
 
-  keyPress(event: any) {
+  keyPress(event: KeyboardEvent) {
     switch (event.key) {
       case ';':
       case ',':
