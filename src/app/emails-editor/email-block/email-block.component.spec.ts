@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { EmailBlockComponent } from './email-block.component';
+import { Block } from '../block';
 
 describe('EmailBlockComponent', () => {
   let component: EmailBlockComponent;
@@ -24,6 +25,8 @@ describe('EmailBlockComponent', () => {
   });
 
   it('should create', () => {
+    component.block = new Block('test');
+    fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 });

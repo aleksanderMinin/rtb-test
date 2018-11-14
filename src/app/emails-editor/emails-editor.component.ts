@@ -12,7 +12,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   constructor() { }
 
-  inputFormPlaceholder: string = 'Enter names or email addresses';
+  _inputFormPlaceholder: string = 'Enter names or email addresses';
 
   blocks: Array<Block> = [];
 
@@ -74,9 +74,9 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   blocksChanged(): void {
     if (this.blocks.length === 0) {
-      this.inputFormPlaceholder = 'Enter names or email addresses';
+      this._inputFormPlaceholder = 'Enter names or email addresses';
     } else {
-      this.inputFormPlaceholder = 'add more people...';
+      this._inputFormPlaceholder = 'add more people...';
     }
 
     this.count.emit(this.blocks.length);
