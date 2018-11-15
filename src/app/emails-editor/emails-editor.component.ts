@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+
 import { Block } from './block';
+
 import * as $ from 'jquery';
 import * as _ from 'lodash';
 
@@ -12,7 +14,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   constructor() { }
 
-  _inputFormPlaceholder: string = 'Enter names or email addresses';
+  inputFormPlaceholder: string = 'Enter names or email addresses';
 
   blocks: Array<Block> = [];
 
@@ -74,17 +76,17 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   blocksChanged(): void {
     if (this.blocks.length === 0) {
-      this._inputFormPlaceholder = 'Enter names or email addresses';
+      this.inputFormPlaceholder = 'Enter names or email addresses';
     } else {
-      this._inputFormPlaceholder = 'add more people...';
+      this.inputFormPlaceholder = 'add more people...';
     }
 
     this.count.emit(this.blocks.length);
   };
 
-  onPaste(event: any): void {
+  onPaste(event: ClipboardEvent): void {
     setTimeout(() => {
-      let text: string = event.target.value.trim();
+      let text: string = (event.target as any).value.trim();
       while (text.match(/[,;]/)) {
         this.addBlock(text.slice(0, text.match(/[,;]/).index));
         text = text.slice(text.match(/[,;]/).index + 1);

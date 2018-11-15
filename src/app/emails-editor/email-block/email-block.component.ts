@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding, SimpleChanges } from '@angular/core';
+
 import { Block } from '../block';
+
 import * as _ from 'lodash';
 
 @Component({

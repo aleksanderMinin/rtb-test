@@ -2,9 +2,9 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { FormsModule }   from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
+
 import { BLOCKS } from './default-blocks';
 import { Utils } from './utils';
-
 import { EmailsEditorComponent } from './emails-editor/emails-editor.component';
 import { EmailBlockComponent } from './emails-editor/email-block/email-block.component';
 
@@ -32,12 +32,9 @@ describe('AppComponent', () => {
   it('should renders', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.componentRef.instance.getEmailsCount();
-    fixture.detectChanges();
     fixture.componentRef.instance.addEmail();
-    fixture.detectChanges();
     fixture.componentRef.instance.getEmailsCount();
     fixture.componentRef.instance.addEmail();
-    fixture.detectChanges();
     fixture.componentRef.instance.getEmailsCount();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('emails-editor')).toBeTruthy();
@@ -56,5 +53,12 @@ describe('AppComponent', () => {
 
   it('test util randomString', () => {
     expect(Utils.randomString(10).length === 10).toBeTruthy();
+  });
+
+  it('should count mails', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.componentRef.instance.addEmail();
+    fixture.componentRef.instance.onCount(1);
+    expect(this.emailsCount === 1).toBeTruthy();
   });
 });
