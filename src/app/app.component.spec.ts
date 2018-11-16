@@ -31,34 +31,34 @@ describe('AppComponent', () => {
 
   it('should renders', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.componentRef.instance.getEmailsCount();
-    fixture.componentRef.instance.addEmail();
-    fixture.componentRef.instance.getEmailsCount();
-    fixture.componentRef.instance.addEmail();
-    fixture.componentRef.instance.getEmailsCount();
+    const component = fixture.componentRef.instance;
+    component.getEmailsCount();
+    fixture.detectChanges()
+    component.addEmail();
+    fixture.detectChanges()
+    component.getEmailsCount();
+    component.addEmail();
+    fixture.detectChanges()
+    component.getEmailsCount();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('emails-editor')).toBeTruthy();
   });
 
   it('test util randomNumber', () => {
-    let randomNumber: number;
-    let greater1Less20: boolean = true;
-    for (let i = 0; i < 20; i++) {
-      randomNumber = Utils.randomNumber(1, 20);
-      greater1Less20 = randomNumber >= 1 && randomNumber <= 20 && greater1Less20;
-    }
-
-    expect(greater1Less20).toBeTruthy();
+    const randomNumber: number = Utils.randomNumber(1, 20);
+    expect(randomNumber >= 1 && randomNumber <= 20).toBeTruthy();
   });
 
   it('test util randomString', () => {
-    expect(Utils.randomString(10).length === 10).toBeTruthy();
+    expect(Utils.randomString(10).length).toBe(10);
+    expect(Utils.randomString(10, true).length).toBe(10);
   });
 
   it('should count mails', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.componentRef.instance.addEmail();
-    fixture.componentRef.instance.onCount(1);
-    expect(this.emailsCount === 1).toBeTruthy();
+    const component = fixture.componentRef.instance;
+    component.addEmail();
+    component.onCount(1);
+    expect(component.emailsCount).toBe(1);
   });
 });

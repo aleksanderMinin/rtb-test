@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Utils } from './utils';
 import { BLOCKS } from './default-blocks';
 

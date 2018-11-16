@@ -38,6 +38,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   addBlock(address: string): void {
     // Discard doubles or empty address
+    address = address.trim();
     const hasDouble = _.findIndex(this.blocks, (block: Block) => { return block.address == address; }) > -1;
     if (!address || address.length == 0 || hasDouble) {
       return;
@@ -86,7 +87,7 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
 
   onPaste(event: ClipboardEvent): void {
     setTimeout(() => {
-      let text: string = (event.target as any).value.trim();
+      let text: string = (event.target as any).value;
       while (text.match(/[,;]/)) {
         this.addBlock(text.slice(0, text.match(/[,;]/).index));
         text = text.slice(text.match(/[,;]/).index + 1);
