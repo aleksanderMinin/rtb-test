@@ -59,7 +59,7 @@ describe('EmailsEditorComponent', () => {
 
     for (let i=0; i<=testString.length; i++) {
       let event = { key: testString.slice(i, i + 1)};
-      component.keyPress(event as KeyboardEvent);
+      component.inputEvent(event as KeyboardEvent);
       component.inputEmail = component.inputEmail.concat(event.key);
     }
 

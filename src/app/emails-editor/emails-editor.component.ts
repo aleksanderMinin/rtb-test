@@ -97,8 +97,15 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
     }, 50);
   };
 
-  keyPress(event: KeyboardEvent) {
-    switch (event.key) {
+  inputEvent(event: KeyboardEvent | FocusEvent) {
+    let key: string;
+    if (event instanceof KeyboardEvent) {
+      key = event.key;
+    } else {
+      key = event.type;
+    }
+
+    switch (key) {
       case ';':
       case ',':
       case 'Enter':
