@@ -54,23 +54,29 @@ describe('EmailsEditorComponent', () => {
     tick(150);
   }));
 
-  it('should response input', () => {
-    const testString = '2@1.3,,2;;';
+  it('should response input events', () => {
+    component.inputEmail = 'focusout@event.org'
+    let event: FocusEvent | KeyboardEvent = new FocusEvent('focusout');
+    component.inputEvent(event);
 
+    component.inputEmail = 'enter@event.org'
+    event = new KeyboardEvent('keypress', {
+      key: 'Enter'
+    });
+    component.inputEvent(event);
+
+    expect(component.blocks.length).toBe(2);
+
+    const testString = '2@1.3,,2;;';
     for (let i = 0; i <= testString.length - 1; i++) {
-      const event = new KeyboardEvent('keypress', {
+      event = new KeyboardEvent('keypress', {
         key: testString.slice(i, i + 1)
       });
       component.inputEvent(event);
       component.inputEmail = component.inputEmail.concat(event.key);
     }
-    expect(component.blocks.length).toBe(2);
 
-    component.inputEmail = 'focusout@event.org'
-    const focusEvent = new FocusEvent('focusout');
-    component.inputEvent(focusEvent);
-
-    expect(component.blocks.length).toBe(3);
+    expect(component.blocks.length).toBe(4);
   });
 
   it('should delete block', () => {
