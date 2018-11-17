@@ -7,10 +7,10 @@
   </email-block>
   <textarea
     [placeholder]="inputFormPlaceholder"
-    [(ngModel)]="inputEmail"
     (keyup)="inputEvent($event)"
-    tabindex="-1"
     (focusout)="inputEvent($event)"
+    [(ngModel)]="inputEmail"
+    tabindex="-1"
     autofocus
     wrap="off">
   </textarea>

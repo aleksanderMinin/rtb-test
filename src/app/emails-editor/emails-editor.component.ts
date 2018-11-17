@@ -102,6 +102,10 @@ export class EmailsEditorComponent implements OnChanges, OnDestroy, OnInit {
     let key: string;
     if (event instanceof KeyboardEvent) {
       key = event.key;
+      // Android chrome
+      if (key === 'Unidentified' && event.keyCode === 229) {
+        key = ((event.target as any).value as string).slice(-1);
+      }
     } else {
       key = event.type;
     }
