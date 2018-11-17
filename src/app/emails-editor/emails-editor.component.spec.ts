@@ -60,7 +60,7 @@ describe('EmailsEditorComponent', () => {
     component.inputEvent(event);
 
     component.inputEmail = 'enter@event.org'
-    event = new KeyboardEvent('keypress', {
+    event = new KeyboardEvent('keyup', {
       key: 'Enter'
     });
     component.inputEvent(event);
@@ -69,7 +69,7 @@ describe('EmailsEditorComponent', () => {
 
     const testString = '2@1.3,,2;;';
     for (let i = 0; i <= testString.length - 1; i++) {
-      event = new KeyboardEvent('keypress', {
+      event = new KeyboardEvent('keyup', {
         key: testString.slice(i, i + 1)
       });
       component.inputEvent(event);

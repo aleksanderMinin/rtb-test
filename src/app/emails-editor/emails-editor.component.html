@@ -8,7 +8,7 @@
   <textarea
     [placeholder]="inputFormPlaceholder"
     [(ngModel)]="inputEmail"
-    (keypress)="inputEvent($event)"
+    (keyup)="inputEvent($event)"
     tabindex="-1"
     (focusout)="inputEvent($event)"
     autofocus
