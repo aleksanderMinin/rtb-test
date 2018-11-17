@@ -1,0 +1,47 @@
+:host {
+  display: inline-flex;
+  background-color: #d5e5ff;
+  border-radius: 22px;
+  font-size: 15px;
+  margin: 7px 0px 0px 8px;
+  height: 25px;
+  cursor: default;
+  align-items: flex-start;
+  max-width: 96%;
+
+  span {
+    position: relative;
+    top: 3px;
+    left: 1px;
+    padding: 0px 8px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .icon-x {
+    display: inline-block;
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+
+    &::before {
+      content: '\D7';
+    }
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+
+  &.invalid-block {
+    background-color: inherit;
+    border: none;
+    color: black;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: 2px dotted #d14836;
+  }
+}
+

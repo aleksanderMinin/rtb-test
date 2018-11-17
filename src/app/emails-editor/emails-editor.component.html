@@ -1,0 +1,17 @@
+<h2>Share <b>Board name</b> with other</h2>
+<div class="input-form">
+  <email-block
+    *ngFor="let block of blocks"
+    [block]="block"
+    (deleted)="onDeleted($event)">
+  </email-block>
+  <textarea
+    [placeholder]="inputFormPlaceholder"
+    (keyup)="inputEvent($event)"
+    (focusout)="inputEvent($event)"
+    [(ngModel)]="inputEmail"
+    tabindex="-1"
+    autofocus
+    wrap="off">
+  </textarea>
+</div>
