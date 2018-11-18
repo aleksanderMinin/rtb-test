@@ -8,6 +8,6 @@ export class Block {
   }
 
   validate(): boolean {
-    return this.address.match(/.+@.+\..+/i) ? true : false;
+    return this.address.match(/[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]{2,}/i) ? true : false;
   }
 }
